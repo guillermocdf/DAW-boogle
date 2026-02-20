@@ -67,4 +67,46 @@ document.addEventListener('DOMContentLoaded', () => {
     playerNameInput.disabled = false;
   });
 
+  function startTimer(duration) {
+    let timeRemaining = duration;
+
+    timerDisplay.style.color = '#fff';
+    updateTimerDisplay(timeRemaining);
+
+    timer = setInterval(() => {
+      timeRemaining--;
+      updateTimerDisplay(timeRemaining);
+
+      if (timeRemaining <= 10) {
+        timerDisplay.style.color = '#FF5722';
+      }
+
+      if (timeRemaining <= 0) {
+        clearInterval(timer);
+        timerDisplay.style.color = '#fff';
+
+        showMessage('Tiempo terminado');
+        saveGameResult();
+
+        startBtn.disabled = false;
+        isGameStarted = false;
+
+        playerNameInput.disabled = false;
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    timerDisplay.textContent =
+      `Tiempo restante: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+function resetGameBoardOnly() {}
+function generateGrid() {}
+function saveGameResult() {}
+function showMessage(msg){ alert(msg); }
+function resetAll() {}
+
 });
