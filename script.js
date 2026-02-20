@@ -33,4 +33,38 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedCells = [];
   let playerName = '';
 
+  startBtn.addEventListener('click', () => {
+    playerName = playerNameInput.value.trim();
+
+    if (playerName === '') {
+      showMessage('Por favor, ingresa tu nombre antes de comenzar el juego.');
+      return;
+    }
+
+    playerNameInput.disabled = true;
+
+    startBtn.disabled = true;
+    resetBtn.disabled = false;
+
+    resetGameBoardOnly();
+
+    const timeLimit = parseInt(timeSelect.value, 10) * 60;
+    startTimer(timeLimit);
+
+    generateGrid();
+    isGameStarted = true;
+  });
+
+  resetBtn.addEventListener('click', () => {
+    clearInterval(timer);
+
+    resetAll();
+
+    startBtn.disabled = false;
+    resetBtn.disabled = true;
+    isGameStarted = false;
+
+    playerNameInput.disabled = false;
+  });
+
 });
