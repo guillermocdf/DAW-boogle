@@ -1,3 +1,4 @@
+/* Paso 14: Se agregan funciones para reiniciar el juego completo o solo el tablero y la selección actual */
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scoreDisplay = document.getElementById('score');
   const timerDisplay = document.getElementById('timer');
 
+  // ✅ ahora la palabra se muestra en un textbox
   const selectedWordInput = document.getElementById('selected-word-input');
 
   const showRankingBtn = document.getElementById('show-ranking');
@@ -96,6 +98,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
+  function resetAll() {
+    score = 0;
+    selectedWord = '';
+    selectedCells = [];
+
+    wordList.innerHTML = '';
+    scoreDisplay.textContent = score;
+    timerDisplay.textContent = 'Tiempo restante: 00:00';
+    timerDisplay.style.color = '#fff';
+
+    selectedWordInput.value = '';
+
+    cells.forEach(cell => {
+      cell.textContent = '';
+      cell.classList.remove('selected', 'last-selected', 'can-select');
+    });
+  }
+
+  function resetGameBoardOnly() {
+    score = 0;
+    scoreDisplay.textContent = score;
+    wordList.innerHTML = '';
+
+    clearSelection();
+    cells.forEach(cell => cell.classList.remove('selected', 'last-selected', 'can-select'));
+  }
+
   function updateTimerDisplay(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -103,10 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `Tiempo restante: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-function resetGameBoardOnly() {}
-function generateGrid() {}
-function saveGameResult() {}
-function showMessage(msg){ alert(msg); }
-function resetAll() {}
+  function generateGrid() {}
+  function saveGameResult() {}
+  function showMessage(msg){ alert(msg); }
+  function clearSelection() {}
 
 });
