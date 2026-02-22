@@ -125,6 +125,32 @@ document.addEventListener('DOMContentLoaded', () => {
     cells.forEach(cell => cell.classList.remove('selected', 'last-selected', 'can-select'));
   }
 
+  function generateGrid() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const vowels = 'AEIOU';
+    const numVowels = 5;
+
+    const vowelIndices = [];
+    while (vowelIndices.length < numVowels) {
+      const randomIndex = Math.floor(Math.random() * cells.length);
+      if (!vowelIndices.includes(randomIndex)) vowelIndices.push(randomIndex);
+    }
+
+    vowelIndices.forEach(index => {
+      const randomVowel = vowels.charAt(Math.floor(Math.random() * vowels.length));
+      cells[index].textContent = randomVowel;
+    });
+
+    cells.forEach((cell, index) => {
+      if (!vowelIndices.includes(index)) {
+        const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+        cell.textContent = randomLetter;
+      }
+    });
+
+    updateSelectableCells();
+  }
+
   function updateTimerDisplay(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -132,9 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
       `Tiempo restante: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-  function generateGrid() {}
   function saveGameResult() {}
   function showMessage(msg){ alert(msg); }
   function clearSelection() {}
+  function updateSelectableCells() {}
 
 });
