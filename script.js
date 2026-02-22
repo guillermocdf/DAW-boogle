@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     playerNameInput.disabled = false;
   });
 
+  cells.forEach(cell => cell.addEventListener('click', selectCell));
+
   function startTimer(duration) {
     let timeRemaining = duration;
 
@@ -96,6 +98,113 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
+  function resetAll() {
+    score = 0;
+    selectedWord = '';
+    selectedCells = [];
+
+    wordList.innerHTML = '';
+    scoreDisplay.textContent = score;
+    timerDisplay.textContent = 'Tiempo restante: 00:00';
+    timerDisplay.style.color = '#fff';
+
+    selectedWordInput.value = '';
+
+    cells.forEach(cell => {
+      cell.textContent = '';
+      cell.classList.remove('selected', 'last-selected', 'can-select');
+    });
+  }
+
+  function resetGameBoardOnly() {
+    score = 0;
+    scoreDisplay.textContent = score;
+    wordList.innerHTML = '';
+
+    clearSelection();
+    cells.forEach(cell => cell.classList.remove('selected', 'last-selected', 'can-select'));
+  }
+
+  function generateGrid() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const vowels = 'AEIOU';
+    const numVowels = 5;
+
+    const vowelIndices = [];
+    while (vowelIndices.length < numVowels) {
+      const randomIndex = Math.floor(Math.random() * cells.length);
+      if (!vowelIndices.includes(randomIndex)) vowelIndices.push(randomIndex);
+    }
+
+    vowelIndices.forEach(index => {
+      const randomVowel = vowels.charAt(Math.floor(Math.random() * vowels.length));
+      cells[index].textContent = randomVowel;
+    });
+
+    cells.forEach((cell, index) => {
+      if (!vowelIndices.includes(index)) {
+        const randomLetter = letters.charAt(Math.floor(Math.random() * letters.length));
+        cell.textContent = randomLetter;
+      }
+    });
+
+    updateSelectableCells();
+  }
+
+  function selectCell(event) {
+    if (!isGameStarted) return;
+
+    const cell = event.target;
+
+    if (selectedCells.length > 0) {
+      const lastCell = selectedCells[selectedCells.length - 1];
+      const lastIndex = Array.from(cells).indexOf(lastCell);
+      const currentIndex = Array.from(cells).indexOf(cell);
+
+      const lastRow = Math.floor(lastIndex / 4);
+      const lastCol = lastIndex % 4;
+      const currentRow = Math.floor(currentIndex / 4);
+      const currentCol = currentIndex % 4;
+
+      const isAdjacent =
+        Math.abs(lastRow - currentRow) <= 1 &&
+        Math.abs(lastCol - currentCol) <= 1;
+
+      if (!isAdjacent) return;
+    }
+
+    if (!cell.classList.contains('selected')) {
+      if (selectedCells.length > 0) {
+        selectedCells[selectedCells.length - 1].classList.remove('last-selected');
+      }
+
+      cell.classList.add('selected');
+      selectedCells.push(cell);
+
+      selectedWord += cell.textContent.toLowerCase();
+
+      selectedWordInput.value = selectedWord;
+
+      cell.classList.add('last-selected');
+
+      updateSelectableCells();
+    }
+  }
+
+  function updateSelectableCells() {
+    cells.forEach(cell => cell.classList.remove('can-select'));
+  }
+
+  function clearSelection() {
+    selectedWord = '';
+    selectedCells.forEach(cell => cell.classList.remove('selected', 'last-selected'));
+    selectedCells = [];
+
+    selectedWordInput.value = '';
+
+    updateSelectableCells();
+  }
+
   function updateTimerDisplay(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -103,10 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `Tiempo restante: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-function resetGameBoardOnly() {}
-function generateGrid() {}
 function saveGameResult() {}
 function showMessage(msg){ alert(msg); }
-function resetAll() {}
 
 });
