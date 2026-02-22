@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     playerNameInput.disabled = false;
   });
 
+  submitWordBtn.addEventListener('click', submitWord);
+
   cells.forEach(cell => cell.addEventListener('click', selectCell));
 
   function startTimer(duration) {
@@ -195,6 +197,31 @@ document.addEventListener('DOMContentLoaded', () => {
     cells.forEach(cell => cell.classList.remove('can-select'));
   }
 
+  function submitWord() {
+    if (!isGameStarted) return;
+
+    if (selectedWord.length < 3) {
+      showMessage('Palabra demasiado corta');
+      clearSelection();
+      return;
+    }
+
+    fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${selectedWord}`)
+      .then(response => {
+        if (!response.ok) throw new Error('Palabra no encontrada');
+        return response.json();
+      })
+      .then(() => {
+        addWordToList(selectedWord);
+        updateScore(selectedWord);
+        clearSelection();
+      })
+      .catch(() => {
+        showMessage('Palabra no válida');
+        clearSelection();
+      });
+  }
+
   function clearSelection() {
     selectedWord = '';
     selectedCells.forEach(cell => cell.classList.remove('selected', 'last-selected'));
@@ -203,6 +230,17 @@ document.addEventListener('DOMContentLoaded', () => {
     selectedWordInput.value = '';
 
     updateSelectableCells();
+  }
+
+  function addWordToList(word) {
+    const li = document.createElement('li');
+    li.textContent = word;
+    wordList.appendChild(li);
+  }
+
+  function updateScore(word) {
+    score += word.length;
+    scoreDisplay.textContent = score;
   }
 
   function updateTimerDisplay(seconds) {
