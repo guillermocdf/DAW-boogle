@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playerName = playerNameInput.value.trim();
 
     if (playerName === '') {
-      showMessage('Por favor, ingresa tu nombre antes de comenzar el juego.');
+      showMessage('Ingresa tu nombre antes de comenzar el juego.');
       return;
     }
 
@@ -248,8 +248,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateScore(word) {
-    score += word.length;
-    scoreDisplay.textContent = score;
+  const len = word.length;
+
+  let points = 0;
+  if (len >= 8) points = 11;
+  else if (len === 7) points = 5;
+  else if (len === 6) points = 3;
+  else if (len === 5) points = 2;
+  else if (len >= 3) points = 1;
+
+  score += points;
+  scoreDisplay.textContent = score;
   }
 
   function updateTimerDisplay(seconds) {
