@@ -39,6 +39,11 @@ h1 {
 .controls-buttons {
   display: flex;
   gap: 10px;
+  width: 100%;
+}
+
+.controls-buttons button {
+  flex: 1;
 }
 
 .grid {
@@ -67,16 +72,19 @@ h1 {
   color: #fff;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s, border 0.2s;
+  box-sizing: border-box;
 }
 
 .cell.selected {
   background-color: #ffeb3b;
   color: #333;
-  transform: scale(1.05);
+  transform: none;
 }
 
 .cell.last-selected {
-  border: 2px solid #ff5722;
+  border: none;
+  outline: 2px solid #ff5722;
+  outline-offset: -2px;
 }
 
 #timer {
@@ -207,4 +215,9 @@ button:hover {
     justify-content: center;
     margin: 0 auto 20px;
   }
+}
+
+#message-hint {
+  font-size: 12px;
+  opacity: 0.8;
 }

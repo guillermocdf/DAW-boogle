@@ -49,7 +49,6 @@
       <div class="cell" id="cell-15"></div>
     </div>
 
-    <!-- textbox (read-only) -->
     <div class="input-area">
       <label for="selected-word-input">Palabra:</label>
       <input type="text" id="selected-word-input" readonly placeholder="Seleccioná letras para formar una palabra" />
@@ -62,19 +61,17 @@
       <h3>Puntuación: <span id="score">0</span></h3>
     </div>
 
-    <!-- contacto debajo de ranking -->
     <div class="buttons-container vertical">
       <button id="show-ranking">Mostrar Ranking</button>
       <button id="contact-btn">Contacto</button>
     </div>
   </div>
 
-  <!-- Modal Ranking -->
   <div id="ranking-modal" class="modal">
     <div id="ranking-content" class="modal-content">
       <h2>Ranking</h2>
       <button id="close-ranking" class="close-btn">Cerrar</button>
-
+      <button id="clear-ranking" class="close-btn" style="right: 110px;">Borrar Ranking</button>
       <table id="ranking-table">
         <thead>
           <tr>
@@ -88,7 +85,6 @@
     </div>
   </div>
 
-  <!-- Modal Mensajes -->
   <div id="message-modal" class="modal">
     <div class="modal-content">
       <span id="modal-message"></span>

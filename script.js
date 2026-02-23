@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const showRankingBtn = document.getElementById('show-ranking');
   const rankingModal = document.getElementById('ranking-modal');
   const closeRankingBtn = document.getElementById('close-ranking');
+  const clearRankingBtn = document.getElementById('clear-ranking');
   const rankingTableBody = document.querySelector('#ranking-table tbody');
 
   const playerNameInput = document.getElementById('player-name');
@@ -71,6 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
   showRankingBtn.addEventListener('click', showRanking);
   closeRankingBtn.addEventListener('click', closeRanking);
   closeMessageBtn.addEventListener('click', closeMessage);
+  clearRankingBtn.addEventListener('click', clearRanking);
+
+  contactBtn.addEventListener('click', () => { // conecta el botón "Contacto" con una navegación a otra página
+  window.location.href = 'contacto.html';    // cambia la página actual por contacto.html
+});
 
   cells.forEach(cell => cell.addEventListener('click', selectCell));
 
@@ -283,6 +289,16 @@ document.addEventListener('DOMContentLoaded', () => {
     rankingModal.style.display = 'flex';
   }
 
+  function closeRanking() {
+    rankingModal.style.display = 'none';
+  }
+
+  function clearRanking() {
+    localStorage.removeItem('boggleRankings');
+    rankingTableBody.innerHTML = '';
+    showMessage('Ranking borrado');
+  }
+
   function showMessage(message) {
     modalMessage.textContent = message;
     messageModal.style.display = 'flex';
@@ -290,10 +306,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeMessage() {
     messageModal.style.display = 'none';
-  }
-
-  function closeRanking() {
-    rankingModal.style.display = 'none';
   }
 
 });

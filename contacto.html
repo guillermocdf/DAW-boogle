@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto - Boggle</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Contacto</h1>
+
+    <div class="controls">
+      <label for="contact-name">Nombre:</label>
+      <input type="text" id="contact-name" placeholder="Tu nombre" />
+
+      <label for="contact-email">Email:</label>
+      <input type="email" id="contact-email" placeholder="tu@email.com" />
+
+      <label for="contact-message">Mensaje:</label>
+      <textarea id="contact-message" rows="7" placeholder="Escribí tu mensaje"></textarea>
+      <small id="message-hint">Mínimo 5 caracteres</small>
+
+      <div class="controls-buttons">
+        <button id="send-btn">Enviar mensaje</button>
+        <button id="back-btn">Volver al juego</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="message-modal" class="modal">
+    <div class="modal-content">
+      <span id="modal-message"></span>
+      <button id="close-message" class="close-btn">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="contacto.js"></script>
+</body>
+</html>
