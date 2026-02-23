@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
   submitWordBtn.addEventListener('click', submitWord);
   showRankingBtn.addEventListener('click', showRanking);
   closeRankingBtn.addEventListener('click', closeRanking);
+  closeMessageBtn.addEventListener('click', closeMessage);
 
   cells.forEach(cell => cell.addEventListener('click', selectCell));
 
@@ -280,6 +281,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     rankingModal.style.display = 'flex';
+  }
+
+  function showMessage(message) {
+    modalMessage.textContent = message;
+    messageModal.style.display = 'flex';
+  }
+
+  function closeMessage() {
+    messageModal.style.display = 'none';
   }
 
   function closeRanking() {
