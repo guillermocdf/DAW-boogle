@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   submitWordBtn.addEventListener('click', submitWord);
+  showRankingBtn.addEventListener('click', showRanking);
+  closeRankingBtn.addEventListener('click', closeRanking);
 
   cells.forEach(cell => cell.addEventListener('click', selectCell));
 
@@ -250,7 +252,38 @@ document.addEventListener('DOMContentLoaded', () => {
       `Tiempo restante: ${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   }
 
-function saveGameResult() {}
-function showMessage(msg){ alert(msg); }
+  function saveGameResult() {
+    const result = {
+      name: playerName,
+      score: score,
+      date: new Date().toLocaleString()
+    };
+
+    const rankings = JSON.parse(localStorage.getItem('boggleRankings')) || [];
+    rankings.push(result);
+    rankings.sort((a, b) => b.score - a.score);
+    localStorage.setItem('boggleRankings', JSON.stringify(rankings));
+  }
+
+  function showRanking() {
+    const rankings = JSON.parse(localStorage.getItem('boggleRankings')) || [];
+    rankingTableBody.innerHTML = '';
+
+    rankings.forEach(rank => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${rank.name}</td>
+        <td>${rank.score}</td>
+        <td>${rank.date}</td>
+      `;
+      rankingTableBody.appendChild(row);
+    });
+
+    rankingModal.style.display = 'flex';
+  }
+
+  function closeRanking() {
+    rankingModal.style.display = 'none';
+  }
 
 });
