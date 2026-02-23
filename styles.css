@@ -221,3 +221,18 @@ button:hover {
   font-size: 12px;
   opacity: 0.8;
 }
+
+.repo-link {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.repo-link a {
+  color: #e0e0e0;          /* mismo color que el texto del juego */
+  text-decoration: underline;
+  word-break: break-all;   /* evita overflow en mobile */
+}
+
+.repo-link a:hover {
+  color: #ffeb3b;          /* amarillo al pasar el mouse */
+}
