@@ -50,7 +50,7 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 260px;
+  max-width: 270px;
   gap: 5px;
   justify-content: center;
   margin: 10px 0 20px;
